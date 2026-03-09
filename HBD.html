@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBD Bibubbb Gemoyyy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    background-size: 400% 400%;
+    animation: gradientBG 20s ease infinite;
+    font-family: 'Pacifico', cursive;
+    color: #fff;
+    text-align: center;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .container {
+    max-width: 800px;
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .text {
+    font-size: 1.5rem;
+    line-height: 2;
+    opacity: 1;
+  }
+
+  .heart-large {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    background: red;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    animation: beat 1s infinite;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .heart-large::before,
+  .heart-large::after {
+    content: "";
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: red;
+    border-radius: 50%;
+  }
+
+  .heart-large::before { top: -75px; left: 0; }
+  .heart-large::after { left: 75px; top: 0; }
+
+  @keyframes beat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(-45deg); }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(-45deg); }
+  }
+
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    opacity: 0.9;
+    top: 0;
+    animation: confettiFall linear infinite;
+  }
+
+  @keyframes confettiFall {
+    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+  }
+
+  .heart-small {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    animation: floatUp 4s linear forwards;
+  }
+
+  .heart-small::before,
+  .heart-small::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+  .heart-small::before { top: -10px; left: 0; }
+  .heart-small::after { left: 10px; top: 0; }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(-45deg); opacity:1; }
+    100% { transform: translateY(-600px) rotate(-45deg); opacity:0; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="text" id="hbdText"></div>
+  <div class="heart-large" id="bigHeart"></div>
+</div>
+
+<script>
+const messages = [
+  "bibubbb cantikk selamat ulang tahun yaa sayangg tepat pada hari ini km bertambahh usiaa semoga rezeki km dilancarkan dan urusan km di mudahkan.",
+  "Semoga impian km di tahun ini bisa tercapai buat ngejar 1k semoga sehat selalu sayangg.",
+  "Semoga km menjadi diri sendiri yang lebih baik dari sebelum nya untuk ke depannya.",
+  "Jangan lupa sayang sama kedua orang tua km terutama ayah yg lagi sakit, dan terimakasih km selama ini bisa terus sama aku.",
+  "Ak sayang banget sama km, jangan lupa bahagia selalu ya bibubbb gemoyyy 🤍🤍🤍🤍🤍🤍🤍🤍🤍🤍🤍"
+];
+
+const textEl = document.getElementById('hbdText');
+let paraIndex = 0;
+
+function typeWordByWord(para) {
+  const p = document.createElement('p');
+  textEl.appendChild(p);
+  let words = para.split(" ");
+  let i = 0;
+  function addWord() {
+    if (i < words.length) {
+      p.innerHTML += words[i] + " ";
+      i++;
+      setTimeout(addWord, 200);
+    }
+  }
+  addWord();
+}
+
+function showNextPara() {
+  if (paraIndex < messages.length) {
+    typeWordByWord(messages[paraIndex]);
+    paraIndex++;
+    setTimeout(showNextPara, 3500);
+  }
+}
+
+showNextPara();
+
+// Generate confetti
+function createConfetti() {
+  const c = document.createElement('div');
+  c.classList.add('confetti');
+  c.style.left = Math.random() * window.innerWidth + 'px';
+  c.style.width = c.style.height = (5 + Math.random()*10) + 'px';
+  c.style.background = `hsl(, 100%, 70%)`;
+  c.style.animationDuration = (3 + Math.random()*5) + 's';
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),5000);
+}
+
+setInterval(createConfetti, 100);
+
+// Heart on click
+const bigHeart = document.getElementById('bigHeart');
+bigHeart.addEventListener('click', () => {
+  for(let i=0;i<5;i++){
+    const h = document.createElement('div');
+    h.classList.add('heart-small');
+    h.style.left = (bigHeart.offsetLeft + 50 + Math.random()*50) + 'px';
+    h.style.top = (bigHeart.offsetTop + 50 + Math.random()*50) + 'px';
+    h.style.width = h.style.height = (10 + Math.random()*20)+'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  }
+});
+</script>
+</body>
+</html>
